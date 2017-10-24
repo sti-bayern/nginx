@@ -1,6 +1,6 @@
-FROM akilli/base
+FROM adbv/base
 
-LABEL maintainer="Ayhan Akilli"
+LABEL maintainer="Günther Morhart"
 #
 # Setup
 #

@@ -8,7 +8,8 @@ RUN apk add --no-cache \
         nginx \
         openssl && \
     rm /etc/nginx/conf.d/default.conf && \
-    #chown app:app /var/tmp/nginx && \
+    mkdir /var/tmp/nginx && \
+    chown -R app:app /var/tmp/nginx && \
     mkdir /etc/nginx/ssl && \
     openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
 

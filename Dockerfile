@@ -1,27 +1,21 @@
-FROM adbv/base
+FROM akilli/base
 
-LABEL maintainer="Günther Morhart"
-#
-# Setup
-#
+LABEL maintainer="Ayhan Akilli"
+
 RUN apk add --no-cache \
         nginx \
+        nginx-mod-http-geoip \
+        nginx-mod-http-image-filter \
         openssl && \
     rm /etc/nginx/conf.d/default.conf && \
-    mkdir /var/tmp/nginx && \
-    chown -R app:app /var/tmp/nginx && \
-    mkdir /etc/nginx/ssl && \
+    chown -R app:app /var/lib/nginx && \
+    app-user && \
+    app-chown && \
+    mkdir -p \
+        /etc/nginx/ssl \
+        /run/nginx && \
     openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
 
-COPY default.conf /app/nginx.conf
 COPY etc/ /etc/nginx/
-
-#
-# Ports
-#
-EXPOSE 80 443
-
-#
-# Command
-#
-CMD ["nginx"]
+COPY s6/ /s6/nginx/
+COPY default.conf /app/nginx.conf

@@ -1,6 +1,6 @@
-FROM adbv/base:new
+FROM adbv/base:v2.0
 
-LABEL maintainer="Ayhan Akilli"
+LABEL maintainer="Guenther Morhart"
 
 RUN apk add --no-cache \
         nginx \
@@ -11,11 +11,9 @@ RUN apk add --no-cache \
     chown -R app:app /var/lib/nginx && \
     app-user && \
     app-chown && \
-    mkdir -p \
-        /etc/nginx/ssl \
-        /run/nginx && \
+    mkdir -p /etc/nginx/ssl && \
     openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
-
 COPY etc/ /etc/nginx/
-COPY s6/ /s6/nginx/
 COPY default.conf /app/nginx.conf
+
+CMD ["nginx"]
